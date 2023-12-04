@@ -109,6 +109,12 @@ public class Main
                                 case 3:
                                     course.logedin();
                                     break;
+                                case 5:
+                                    changegrades cgrade = new changegrades();
+                                    System.out.println("Enter the student ID : ");
+                                    int id = in.nextInt();
+                                    cgrade.change_student_details(id);
+                                    break;
                                 default:
                                     System.out.println("Invalid Choice");
                             }
