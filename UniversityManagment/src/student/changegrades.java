@@ -43,7 +43,6 @@ public class changegrades {
 
                 case "2":
                     System.out.println("Enter New Email : ");
-                    in.nextLine();
                     String new_email = in.nextLine();
                     String query2 = "UPDATE `university`.`students` SET `students_email` = '"+new_email+"' WHERE (`student_id` = '"+studentId+"');";
                     Statement stm2 = connection.createStatement();
@@ -57,7 +56,6 @@ public class changegrades {
 
                 case "3":
                     System.out.println("Enter New Phone No. : ");
-                    in.nextLine();
                     String new_no = in.nextLine();
                     String query3 = "UPDATE `university`.`students` SET `phone_no` = '"+new_no+"' WHERE (`student_id` = '"+studentId+"');";
                     Statement stm3 = connection.createStatement();
