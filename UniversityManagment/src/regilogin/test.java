@@ -6,186 +6,117 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.sql.Statement;
 
 public class test {
 
+    public static void faccurs() {
+        Scanner in = new Scanner(System.in);
 
+        System.out.println("1. Add Course");
+        System.out.println("2. Request Feedback");
+        System.out.println("Enter Your Choice: ");
+        int choice = in.nextInt();
 
-    public static String adm (String b)
-    { 
-        String jdbcUrl = "jdbc:mysql://localhost:3306/university";
-        String username = "root";
-        String password = "root";
-        String a="" ;
+        switch (choice) {
+            case 1:
+                addCourse();
+                break;
+            case 2:
+                
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                break;
+        }
+    }
 
-        try {
-            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Scanner scanner = new Scanner(System.in);
+    private static void addCourse() {
+        Scanner in = new Scanner(System.in);   
+        System.out.println("Enter Faculty ID:");
+        String facid = in.nextLine();
 
-            System.out.print("Enter username: ");
-            String enteredUsername = scanner.nextLine();
+        if (checkfacid(facid)==false) {
+            System.out.println("Faculty ID does not exist.");
+            addCourse();;  
+        }
 
-            System.out.print("Enter password: ");
-            String enteredPassword = scanner.nextLine();
+        System.out.println("Enter Course Name: ");
+        String cname = in.nextLine();
+        
+    if(checkcourse(cname)==false)
+        {
+            System.out.println("Course does not exist.");
+            System.err.println("All the course in the university are:");
+            showAllCourses();
 
+            return;
 
-           
-                // Check the database for the entered username and password
-                String query = "SELECT * FROM user WHERE username = ? AND passsword = ? ";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setString(1, enteredUsername);
-                    preparedStatement.setString(2, enteredPassword);
-                   
+        }
 
-                    ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+                PreparedStatement pstmt = con.prepareStatement("UPDATE INTO facregi ('a') VALUES (?) WHERE fac_id = ?")) {
+            pstmt.setString(1, cname);
+            pstmt.setString(2, facid);
+            
 
-                    if (resultSet.next()) {
-                        String storedDesignation = resultSet.getString("designation");
+            pstmt.executeUpdate();
 
-                        if (storedDesignation.equalsIgnoreCase(b)) {
-                            System.out.println("Login successful!");
-                            a = enteredUsername;
-                        } else {
-                            System.out.println("Designation mismatch. Please enter the correct designation.");
-                        
-                        }
-                    } else {
-                        System.out.println("Invalid username or password");
-                    }
-                }
+            System.out.println("Course added successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-            connection.close();
+    private static boolean checkfacid(String facid) {
+        boolean exists = false;
+
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM facregi WHERE fac_id = ?")) {
+            pstmt.setString(1, facid);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                exists = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return a;
-        
-
+        return exists;
     }
-    public static String fac (String b)
-    { 
-        String jdbcUrl = "jdbc:mysql://localhost:3306/university";
-        String username = "root";
-        String password = "root";
-        String a="" ;
 
-        try {
-            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Scanner scanner = new Scanner(System.in);
+    private static boolean checkcourse(String cname) {
+        boolean exists = false;
 
-            System.out.print("Enter useremail: ");
-            String enteredUseremail = scanner.nextLine();
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM course WHERE Course_name= ?")) {
+            pstmt.setString(1, cname);
 
-            System.out.print("Enter password: ");
-            String enteredPassword = scanner.nextLine();
+            ResultSet rs = pstmt.executeQuery();
 
-
-           
-                // Check the database for the entered username and password
-                String query = "SELECT * FROM user WHERE useremail= ? AND passsword = ? ";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setString(1, enteredUseremail);
-                    preparedStatement.setString(2, enteredPassword);
-                   
-
-                    ResultSet resultSet = preparedStatement.executeQuery();
-
-                    if (resultSet.next()) {
-                        String storedDesignation = resultSet.getString("designation");
-
-                        if (storedDesignation.equalsIgnoreCase(b)) {
-                            System.out.println("Login successful!");
-                            String query1 = "SELECT username FROM user WHERE useremail = ?";
-                            try (PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
-                                preparedStatement1.setString(1, enteredUseremail);
-                                ResultSet resultSet1 = preparedStatement1.executeQuery();
-                                if (resultSet1.next()) {
-                                    a = resultSet1.getString("username");
-                                }
-                            }
-                        catch (SQLException e) {
-                            e.printStackTrace();
-                            }
-                        } else {
-                            System.out.println("Designation mismatch. Please enter the correct designation.");
-                        
-                        }
-                    } else {
-                        System.out.println("Invalid useremail or password");
-                    }
-                }
-
-            connection.close();
+            if (rs.next()) {
+                exists = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return a;
-        
-
+        return exists;
     }
-     public static String stud (String b)
-    { 
-        String jdbcUrl = "jdbc:mysql://localhost:3306/university";
-        String username = "root";
-        String password = "root";
-        String a="" ;
-
-        try {
-            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Enter useremail: ");
-            String enteredUseremail = scanner.nextLine();
-
-            System.out.print("Enter password: ");
-            String enteredPassword = scanner.nextLine();
-
-
-           
-                // Check the database for the entered username and password
-                String query = "SELECT * FROM user WHERE useremail= ? AND passsword = ? ";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setString(1, enteredUseremail);
-                    preparedStatement.setString(2, enteredPassword);
-                   
-
-                    ResultSet resultSet = preparedStatement.executeQuery();
-
-                    if (resultSet.next()) {
-                        String storedDesignation = resultSet.getString("designation");
-
-                        if (storedDesignation.equalsIgnoreCase(b)) {
-                            System.out.println("Login successful!");
-                            String query1 = "SELECT username FROM user WHERE useremail = ?";
-                            try (PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
-                                preparedStatement1.setString(1, enteredUseremail);
-                                ResultSet resultSet1 = preparedStatement1.executeQuery();
-                                if (resultSet1.next()) {
-                                    a = resultSet1.getString("username");
-                                }
-                            }
-                        catch (SQLException e) {
-                            e.printStackTrace();
-                            }
-                        } else {
-                            System.out.println("Designation mismatch. Please enter the correct designation.");
-                        
-                        }
-                    } else {
-                        System.out.println("Invalid useremail or password");
-                    }
-                }
-
-            connection.close();
+    public static void showAllCourses() {
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+             Statement stmt = con.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT Course_name FROM course");
+    
+            while (rs.next()) {
+                String courseName = rs.getString("Course_name");
+                System.out.println(courseName);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return a;
-        
-
-    }
-
+    } 
+    
 }

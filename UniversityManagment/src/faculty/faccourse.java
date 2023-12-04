@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.sql.Statement;
 
 public class faccourse {
-
+    
     public static void faccurs() {
         Scanner in = new Scanner(System.in);
 
@@ -55,9 +55,9 @@ public class faccourse {
         }
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO faccourse (fac_id,fac_course) VALUES (?, ?)")) {
-            pstmt.setString(1, facid);
-            pstmt.setString(2, cname);
+                PreparedStatement pstmt = con.prepareStatement("UPDATE facregi SET course = ? WHERE fac_id = ? ; ")) {
+            pstmt.setString(1, cname);
+            pstmt.setString(2, facid);
             
 
             pstmt.executeUpdate();
@@ -67,45 +67,6 @@ public class faccourse {
             e.printStackTrace();
         }
     }
-
-    // private static void requestFeedback() {
-    //     System.out.println("Enter Faculty ID:");
-    //     String facid = in.nextLine();
-
-    //     if (!checkfacid(facid)==) {
-    //         System.out.println("Faculty ID does not exist.");
-    //         return;
-    //     }
-
-    //     System.out.println("Enter Course Code for which you want to request feedback:");
-    //     String ccode = in.nextLine();
-
-    //     try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-    //             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM feedback WHERE course_code = ?")) {
-    //         pstmt.setString(1, ccode);
-
-    //         ResultSet rs = pstmt.executeQuery();
-
-    //         if (!rs.next()) {
-    //             System.out.println("No feedback has been submitted for this course yet.");
-    //             return;
-    //         }
-
-    //         System.out.println("Feedback for this course:");
-
-    //         while (rs.next()) {
-    //             String student_id = rs.getString("student_id");
-    //             String feedback = rs.getString("feedback");
-
-    //             System.out.println("Student ID: " + student_id);
-    //             System.out.println("Feedback: " + feedback);
-    //             System.out.println();
-    //         }
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
-
     private static boolean checkfacid(String facid) {
         boolean exists = false;
 
@@ -156,6 +117,5 @@ public class faccourse {
             e.printStackTrace();
         }
     }
-    
     
 }

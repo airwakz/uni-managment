@@ -4,12 +4,7 @@ import java.util.Scanner;
 public class marksregis {
      public static void mar(){
         Scanner in = new Scanner(System.in);
-        System.out.println("Enter Student ID:");
-        String sid = in.nextLine();
-        if (checksid(sid)==false) {
-            System.out.println("Student ID does not exist.");
-            mar() ;
-        }
+        
         System.out.println("Enter Course Name: ");
         String cname = in.nextLine();
         if(checkcourse(cname)==false)
@@ -17,15 +12,25 @@ public class marksregis {
             System.out.println("Course does not exist.");
             System.err.println("All the course in the university are:");
             showAllCourses();
+            
             mar();
         }
+        System.out.println("Enter Student ID:");
+        int sid = in.nextInt();
+        if (checksid(sid)==false) {
+            System.out.println("Student ID does not exist.");
+            System.out.println("Ask The Admin For Course Registration. ");
+            mar() ;
+        }
+        
         System.out.println("Enter Marks: ");
         int marks = in.nextInt();
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO marks (marks) VALUES (?, ?,?)")) {
-            pstmt.setString(1, sid);
-            pstmt.setString(2, cname);
-            pstmt.setInt(3, marks);
+                PreparedStatement pstmt = con.prepareStatement("UPDATE marks SET marks = ? WHERE student_id = ? AND course_name = ? ;"
+                        )) {
+            pstmt.setInt(1, marks);
+            pstmt.setInt(2, sid);
+            pstmt.setString(3, cname);
             int status = pstmt.executeUpdate();
             if (status > 0) {
                 System.out.println("Record is inserted");
@@ -50,12 +55,12 @@ public class marksregis {
             e.printStackTrace();
         }
     }
-    private static boolean checksid(String facid) {
+    private static boolean checksid(int sid) {
         boolean exists = false;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE fac_id = ?")) {
-            pstmt.setString(1, facid);
+                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE student_id = ?")) {
+            pstmt.setInt(1, sid);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -73,7 +78,7 @@ public class marksregis {
         boolean exists = false;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM course WHERE Course_name= ?")) {
+                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE course_name= ?")) {
             pstmt.setString(1, cname);
 
             ResultSet rs = pstmt.executeQuery();

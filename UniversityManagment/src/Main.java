@@ -70,7 +70,8 @@ public class Main
                                 case 1:
                                    facultyregi.fac(status);
                                     break;
-                                case 2:                                     
+                                case 2: 
+                                     marksregis.mar();                                    
                                     break;
                                 default:
                                     System.out.println("Invalid Choice");
@@ -103,6 +104,7 @@ public class Main
                                     break;
                                 case 2:
                                     faccourse.faccurs();
+
                                     break;
                                 case 3:
                                     course.logedin();
