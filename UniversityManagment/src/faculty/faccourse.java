@@ -54,14 +54,11 @@ public class faccourse {
 
         }
 
-        System.out.println("Enter Course Code: ");
-        String ccode = in.nextLine();
-
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO fac (fac, course_code, fac_id) VALUES (?, ?, ?)")) {
-            pstmt.setString(1, cname);
-            pstmt.setString(2, ccode);
-            pstmt.setString(3, facid);
+                PreparedStatement pstmt = con.prepareStatement("INSERT INTO faccourse (fac_id,fac_course) VALUES (?, ?)")) {
+            pstmt.setString(1, facid);
+            pstmt.setString(2, cname);
+            
 
             pstmt.executeUpdate();
 
