@@ -2,6 +2,7 @@ import java.util.*;
 import student.*;
 import regilogin.*;
 import faculty.*;
+import course.*;
 public class Main
 {
     public static void main(String[] args) {
@@ -14,7 +15,8 @@ public class Main
         int choice=in.nextInt();
         switch(choice){
             case 1:
-                System.out.println("1.Login");
+                
+                System.out.println("1. Login");
                 System.out.println("Enter Your Choice: ");
                 int choice3=in.nextInt();
                 switch(choice3){
@@ -24,9 +26,10 @@ public class Main
                         String status =login.stud("S");
                         System.out.println(status);
                            if((status != "")||(status.length() != 0)){
-                            System.out.println("1. Student Registration");
+                            System.out.println("1. Srudent Registration");
                             System.out.println("2. View Grades");
-                            System.out.println("3. Update Password");
+                            System.out.println("3. View Attendance");
+                            System.out.println("4. Update Password");
                             System.out.println("Enter Your Choice: ");
                             int choice4=in.nextInt();
                             switch(choice4){
@@ -38,11 +41,6 @@ public class Main
                                     viewgrades grades=new viewgrades();
                                     grades.markss(status);
                                     break;
-                                case 3:
-                                    updatepassword upd = new updatepassword();
-                                    updatepassword.updpswd(args);
-                                    break;
-
                                 default:
                                     System.out.println("Invalid Choice");
                             }
@@ -65,19 +63,15 @@ public class Main
                         System.out.println(status);
                         if((status != "")||(status.length() != 0)){
                             System.out.println("1. Faculty Registration");
-                            System.out.println("2. Grades Submission "); 
-                            System.out.println("3. Update Password ");  
+                            System.out.println("2. Grades Submission ");   
                             System.out.println("Enter Your Choice: ");
                             int choice4=in.nextInt();
                             switch(choice4){
                                 case 1:
                                    facultyregi.fac(status);
                                     break;
-                                case 2:                                     
-                                    break;
-                                case 3:
-                                    updatepassword upd = new updatepassword();
-                                    updatepassword.updpswd(args);
+                                case 2: 
+                                     marksregis.mar();                                    
                                     break;
                                 default:
                                     System.out.println("Invalid Choice");
@@ -110,12 +104,10 @@ public class Main
                                     break;
                                 case 2:
                                     faccourse.faccurs();
+
                                     break;
-                                case 5:
-                                    changegrades cgrade = new changegrades();
-                                    System.out.println("Enter the student ID : ");
-                                    int id = in.nextInt();
-                                    cgrade.change_student_details(id);
+                                case 3:
+                                    course.logedin();
                                     break;
                                 default:
                                     System.out.println("Invalid Choice");
