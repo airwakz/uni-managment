@@ -9,26 +9,17 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class changegrades {
-    public void change_student_details(String a){
+    public void change_student_details(int a){
          
         String jdbcUrl = "jdbc:mysql://localhost:3306/university";
         String username = "root";
         String password = "root";
 
-        String studentId = "";
+        int studentId = a;
 
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            String query = "SELECT student_id FROM students WHERE students_name = '"+a+"'";
-            Statement Statement = connection.prepareStatement(query);
 
-            ResultSet resultSet = Statement.executeQuery(query);
-
-            if (resultSet.next()) {
-                studentId = resultSet.getString("student_id");
-            }
-
-            
             // Change Details here 
             Scanner in = new Scanner(System.in);
             System.out.println("1. Change Address : ");
@@ -39,9 +30,7 @@ public class changegrades {
             switch(choice){
                 case "1": 
                     System.out.println("Enter New Address : ");
-                    in.nextLine();
                     String new_add = in.nextLine();
-                    System.out.println(new_add);
                     String query1 = "UPDATE `university`.`students` SET `students_address` = '"+new_add+"' WHERE (`student_id` = '"+studentId+"');";
                     Statement stm1 = connection.createStatement();
                     try{
