@@ -15,9 +15,10 @@ public class viewgrades {
         String username = "root";
         String password = "root";
         
-        String studentId="";
+        int studentId=0;
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+            Scanner scanner = new Scanner(System.in);
             String query = "SELECT student_id FROM students WHERE students_name = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, a);
@@ -25,14 +26,15 @@ public class viewgrades {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()) {
-                    studentId = resultSet.getString("student_id");
+                    studentId = resultSet.getInt("student_id");
                     System.out.println("Roll_No= " + studentId);
                     }
             }
+
             // Retrieve grades for the specified student ID
             String query1 = "SELECT course_name, marks FROM marks WHERE student_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query1)) {
-                preparedStatement.setString(1, studentId);
+                preparedStatement.setInt(1, studentId);
 
                 ResultSet resultSet = preparedStatement.executeQuery();
 

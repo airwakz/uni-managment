@@ -8,7 +8,7 @@ public class marksregis {
         String sid = in.nextLine();
         if (checksid(sid)==false) {
             System.out.println("Student ID does not exist.");
-            return;  
+            mar() ;
         }
         System.out.println("Enter Course Name: ");
         String cname = in.nextLine();
@@ -17,7 +17,7 @@ public class marksregis {
             System.out.println("Course does not exist.");
             System.err.println("All the course in the university are:");
             showAllCourses();
-            return;
+            mar();
         }
         System.out.println("Enter Marks: ");
         int marks = in.nextInt();
@@ -50,11 +50,11 @@ public class marksregis {
             e.printStackTrace();
         }
     }
-    private static boolean checkfacid(String facid) {
+    private static boolean checksid(String facid) {
         boolean exists = false;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM facregi WHERE fac_id = ?")) {
+                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE fac_id = ?")) {
             pstmt.setString(1, facid);
 
             ResultSet rs = pstmt.executeQuery();

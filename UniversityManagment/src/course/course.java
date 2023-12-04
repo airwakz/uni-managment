@@ -30,6 +30,10 @@ public class course {
                     String query1 = "SELECT students_course FROM students WHERE student_id = ?";
                     try (PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
                         preparedStatement1.setInt(1, studentId);
+                        if (checkcourseid(studentId)== true) {
+                        System.out.println("Course alerdy exist ");
+                        continue;
+                        }
 
                         ResultSet resultSet1 = preparedStatement1.executeQuery();
 
@@ -114,6 +118,24 @@ public class course {
             return 0;
         }
         return a;
+    }
+    private static boolean checkcourseid(int a) {
+        boolean exists = false;
+
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE student_id= ?")) {
+            pstmt.setInt(1, a);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                exists = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exists;
     }
     
 }
