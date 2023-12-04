@@ -89,7 +89,7 @@ public class Main
                 String status=login.adm("A");
                 System.out.println(status);
                 if((status != "")||(status.length() != 0)){
-                            System.out.println(" 1. User Registration");
+                            System.out.println("1. User Registration");
                             System.out.println("2. Faculty Course Registration");
                             System.out.println("3. Course Registration");
                             System.out.println("4. Student Semester Registration");
@@ -101,7 +101,7 @@ public class Main
                                       regi.uregi();
                                     break;
                                 case 2:
-
+                                    faccourse.faccurs();
                                     break;
                                 default:
                                     System.out.println("Invalid Choice");
