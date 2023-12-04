@@ -10,7 +10,7 @@ import java.util.Scanner;
 public
  
 class facultyregi {
-
+    
     public static void fac(String a) {
         Scanner in = new Scanner(System.in);
 
@@ -55,4 +55,5 @@ class facultyregi {
             System.out.println("Error occurred");
         }
     }
+    
 }

@@ -6,35 +6,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.sql.Statement;
 
 public class course {
 
-    public static String logedin(String a) {
+    public static void logedin() {
         // Assuming you have a MySQL database
         String jdbcUrl = "jdbc:mysql://localhost:3306/university";
         String username = "root";
         String password = "root";
         String b = "";
+        int a = county();
 
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-
-            // Check the database for the entered username and password
-            String query = "SELECT student_id FROM students WHERE students_name = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, a);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    String studentId = resultSet.getString("student_id");
-                    System.out.println("Roll_No= " + studentId);
-                    b = studentId;
-
+                    
+                  
+                    
+                
                     // Get student's course
+                for (int j = 1; j<= a;j++){
+                    int studentId = j;
                     String query1 = "SELECT students_course FROM students WHERE student_id = ?";
                     try (PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
-                        preparedStatement1.setString(1, studentId);
+                        preparedStatement1.setInt(1, studentId);
 
                         ResultSet resultSet1 = preparedStatement1.executeQuery();
 
@@ -44,7 +39,7 @@ public class course {
                             if (course.equalsIgnoreCase("CSE")) {
                                 String query2 = "INSERT INTO marks (student_id, course_name)" + "VALUES (?, ?);";
                                 try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
-                                    preparedStatement2.setString(1, studentId);
+                                    preparedStatement2.setInt(1, studentId);
                                     for (int i = 0; i < 6; i++) {
                                         if (i == 0) {
                                             String c = "JAVA";
@@ -74,23 +69,51 @@ public class course {
                                 System.out.println("You are a BBA student");
                             } else {
                                 System.out.println("Error in getting student course");
-                                return null;
+                                
                             }
                         }
-                    }
-                } else {
-                    System.out.println("Error in getting student id");
-                    return null;
-                }
-            }
-        } catch (SQLException e) {
+                        }
+                
+                 
+            
+        catch (SQLException e) {
             e.printStackTrace();
-            return null;
+            
         }
+      }
+        
 
-        return b;
+        
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+}
+    public static int county(){
+        String jdbcUrl = "jdbc:mysql://localhost:3306/university";
+        String username = "root";
+        String password = "root";
+        int a;
+        try {
+            Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
+            String query = "SELECT COUNT(*) FROM students";
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(query)) {
+                resultSet.next();
+                int rowCount = resultSet.getInt(1);
+                System.out.println("Number of rows in customers table: " + rowCount);
+                a=rowCount;
+            }
+            catch (SQLException e) {
+                System.out.println("Error in getting student id");
+                return 0;
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error in getting student id");
+            return 0;
+        }
+        return a;
     }
-    public static void checkcourseexist(String a){
-      return;
-    }
+    
 }

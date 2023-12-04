@@ -2,6 +2,7 @@ import java.util.*;
 import student.*;
 import regilogin.*;
 import faculty.*;
+import course.*;
 public class Main
 {
     public static void main(String[] args) {
@@ -102,6 +103,9 @@ public class Main
                                     break;
                                 case 2:
                                     faccourse.faccurs();
+                                    break;
+                                case 3:
+                                    course.logedin();
                                     break;
                                 default:
                                     System.out.println("Invalid Choice");
