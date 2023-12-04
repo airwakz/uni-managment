@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.sql.Statement;
 
 public class faccourse {
 
@@ -46,6 +47,9 @@ public class faccourse {
     if(checkcourse(cname)==false)
         {
             System.out.println("Course does not exist.");
+            System.err.println("All the course in the university are:");
+            showAllCourses();
+
             return;
 
         }
@@ -142,4 +146,18 @@ public class faccourse {
 
         return exists;
     }
+    public static void showAllCourses() {
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+             Statement stmt = con.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT Course_name FROM course");
+    
+            while (rs.next()) {
+                String courseName = rs.getString("Course_name");
+                System.out.println(courseName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
