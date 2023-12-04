@@ -22,7 +22,7 @@ public class Main
                     
                     case 1:
                         
-                        String status =test.stud("S");
+                        String status =login.stud("S");
                         System.out.println(status);
                            if((status != "")||(status.length() != 0)){
                             System.out.println("1. Srudent Registration");
@@ -58,7 +58,7 @@ public class Main
                 int choice2=in.nextInt();
                 switch(choice2){
                     case 1:
-                        String status=test.fac("F");
+                        String status=login.fac("F");
                         System.out.println(status);
                         if((status != "")||(status.length() != 0)){
                             System.out.println("1. Faculty Registration");
