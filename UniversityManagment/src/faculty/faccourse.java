@@ -14,16 +14,12 @@ public class faccourse {
         Scanner in = new Scanner(System.in);
 
         System.out.println("1. Add Course");
-        System.out.println("2. Request Feedback");
         System.out.println("Enter Your Choice: ");
         int choice = in.nextInt();
 
         switch (choice) {
             case 1:
                 addCourse();
-                break;
-            case 2:
-                
                 break;
             default:
                 System.out.println("Invalid choice.");
@@ -38,7 +34,7 @@ public class faccourse {
 
         if (checkfacid(facid)==false) {
             System.out.println("Faculty ID does not exist.");
-            return;  
+             addCourse();  
         }
 
         System.out.println("Enter Course Name: ");
@@ -50,7 +46,7 @@ public class faccourse {
             System.err.println("All the course in the university are:");
             showAllCourses();
 
-            return;
+            addCourse();
 
         }
 

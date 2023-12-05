@@ -47,10 +47,12 @@ public class login {
                             a = enteredUsername;
                         } else {
                             System.out.println("Designation mismatch. Please enter the correct designation.");
+                            adm(b);
                         
                         }
                     } else {
                         System.out.println("Invalid username or password");
+                        adm(b);
                     }
                 }
 
@@ -109,10 +111,11 @@ public class login {
                             }
                         } else {
                             System.out.println("Designation mismatch. Please enter the correct designation.");
-                        
+                            fac(b);                       
                         }
                     } else {
                         System.out.println("Invalid useremail or password");
+                        fac(b);
                     }
                 }
 
@@ -171,10 +174,11 @@ public class login {
                             }
                         } else {
                             System.out.println("Designation mismatch. Please enter the correct designation.");
-                        
+                            stud(b);
                         }
                     } else {
                         System.out.println("Invalid useremail or password");
+                        stud(b);
                     }
                 }
 

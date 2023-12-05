@@ -6,7 +6,7 @@ public class marksregis {
         Scanner in = new Scanner(System.in);
         
         System.out.println("Enter Course Name: ");
-        String cname = in.nextLine();
+        String cnamprintf
         if(checkcourse(cname)==false)
         {
             System.out.println("Course does not exist.");
@@ -40,6 +40,14 @@ public class marksregis {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error occurred");
+        }
+        System.out.println("Do you want to continue? (Y/N)");
+        String ls=in.nextLine();
+        if(ls.equalsIgnoreCase("Y")){
+            mar();
+        }
+        else{
+            System.out.println("Thank You");
         }
      }
      public static void showAllCourses() {
