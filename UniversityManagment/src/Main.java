@@ -3,6 +3,7 @@ import student.*;
 import regilogin.*;
 import faculty.*;
 import course.*;
+
 public class Main
 {
     public static void main(String[] args) {
@@ -16,16 +17,14 @@ public class Main
         switch(choice){
             case 1:
                 
-                System.out.println("1. Login");
-                System.out.print("Enter Your Choice: ");
-                int choice3=in.nextInt();
-                switch(choice3){
+                System.out.println(" Login");
+                
                     
-                    case 1:
+                    
                         
-                        String status =login.stud("S");
+                        int status =login.stud("S");
                         System.out.println(status);
-                           if((status != "")||(status.length() != 0)){
+                           if((status > 0)){
                             System.out.println("1. Srudent Registration");
                             System.out.println("2. View Grades");
                             System.out.println("3. View Attendance");
@@ -41,34 +40,38 @@ public class Main
                                     viewgrades grades=new viewgrades();
                                     grades.markss(status);
                                     break;
+                                case 3:
+                                attendace.view_attendance(status);
+                                    break;
+                                case 4:
+                                    updatepassword.updpswd(args);
+                                break;
                                 default:
                                     System.out.println("Invalid Choice");
+
                             }
 
                            }
-                        break;
-                    default:
-                        System.out.println("Invalid Choice");
-                }
+                        
+                    
+                
             break;
 
             case 2:
                 
-                System.out.println("1. Login");
-                System.out.print("Enter Your Choice: ");
-                int choice2=in.nextInt();
-                switch(choice2){
-                    case 1:
-                        String status=login.fac("F");
-                        System.out.println(status);
-                        if((status != "")||(status.length() != 0)){
+                System.out.println(" Login");
+                
+                    
+                        int sta=login.fac("F");
+                        System.out.println(sta);
+                        if((sta > 0)){
                             System.out.println("1. Faculty Registration");
                             System.out.println("2. Grades Submission ");   
                             System.out.print("Enter Your Choice: ");
                             int choice4=in.nextInt();
                             switch(choice4){
                                 case 1:
-                                   facultyregi.fac(status);
+                                   facultyregi.fac(sta);
                                     break;
                                 case 2: 
                                      marksregis.mar();                                    
@@ -78,22 +81,20 @@ public class Main
                             }
 
                            }
-                    break;
-                    default:
-                        System.out.println("Invalid Choice");
-                break;
+                    
+                    
 
 
-                }
+                
             break;
                 case 3:
                 System.out.println("Login");
-                String status=login.adm("A");
-                System.out.println(status);
-                if((status != "")||(status.length() != 0)){
+                String st=login.adm("A");
+                System.out.println(st);
+                if((st != "")||(st.length() != 0)){
                             System.out.println("1. User Registration");
                             System.out.println("2. Faculty Course Registration");
-                            System.out.println("3. Course Registration");
+                            System.out.println("3. Students Course Registration");
                             System.out.println("4. Student Detials Updation"); 
                             System.out.println("5. Faculty Detials Updation"); 
                             System.out.print("Enter Your Choice: ");

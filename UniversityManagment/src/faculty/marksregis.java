@@ -6,25 +6,33 @@ public class marksregis {
         Scanner in = new Scanner(System.in);
         
         System.out.println("Enter Course Name: ");
-        String cnamprintf
-        if(checkcourse(cname)==false)
+        String cname=in.nextLine();
+        while(checkcourse(cname)==false)
         {
             System.out.println("Course does not exist.");
             System.err.println("All the course in the university are:");
             showAllCourses();
-            
-            mar();
+            System.out.println("Enter Course Name: ");
+            cname=in.nextLine();
         }
         System.out.println("Enter Student ID:");
         int sid = in.nextInt();
-        if (checksid(sid)==false) {
+        while (checksid(sid)==false) {
             System.out.println("Student ID does not exist.");
             System.out.println("Ask The Admin For Course Registration. ");
-            mar() ;
+            System.out.println("Enter Student ID:");
+            sid = in.nextInt();
+            
         }
         
         System.out.println("Enter Marks: ");
         int marks = in.nextInt();
+        while(marks >100){
+            System.out.println("Marks cannot be greater than 100");
+            System.out.print("Enter Marks:");
+            marks = in.nextInt();
+        }
+
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
                 PreparedStatement pstmt = con.prepareStatement("UPDATE marks SET marks = ? WHERE student_id = ? AND course_name = ? ;"
                         )) {

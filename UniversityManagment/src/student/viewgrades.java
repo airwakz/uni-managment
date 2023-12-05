@@ -9,27 +9,16 @@ import java.util.Scanner;
 
 public class viewgrades {
 
-    public void markss(String a) {
+    public void markss(int a) {
         System.out.println("Enter student ID: ");
         String jdbcUrl = "jdbc:mysql://localhost:3306/university";
         String username = "root";
         String password = "root";
+        int studentId=a;
         
-        int studentId=0;
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Scanner scanner = new Scanner(System.in);
-            String query = "SELECT student_id FROM students WHERE students_name = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, a);
-
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                if (resultSet.next()) {
-                    studentId = resultSet.getInt("student_id");
-                    System.out.println("Roll_No= " + studentId);
-                    }
-            }
+            
 
             // Retrieve grades for the specified student ID
             String query1 = "SELECT course_name, marks FROM marks WHERE student_id = ?";

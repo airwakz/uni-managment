@@ -1,130 +1,143 @@
 package course;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.sql.Statement;
 
 public class course {
 
     public static void logedin() {
+        int[] studentIds = getStudentIds();
+        
         // Assuming you have a MySQL database
         String jdbcUrl = "jdbc:mysql://localhost:3306/university";
         String username = "root";
         String password = "root";
-        String b = "";
-        int a = county();
 
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-                    
-                  
-                    
-                
-                    // Get student's course
-                for (int j = 1; j<= a;j++){
-                    int studentId = j;
-                    String query1 = "SELECT students_course FROM students WHERE student_id = ?";
-                    try (PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
-                        preparedStatement1.setInt(1, studentId);
-                        if (checkcourseid(studentId)== true) {
-                        System.out.println("Course alerdy exist ");
+            
+            for (int j = 0; j < studentIds.length; j++) {
+                int studentId = studentIds[j];
+                String query1 = "SELECT students_course FROM students WHERE student_id = ?";
+                try (PreparedStatement preparedStatement1 = connection.prepareStatement(query1)) {
+                    preparedStatement1.setInt(1, studentId);
+
+                    if (checkCourseId(studentId)) {
+                        System.out.println("Course already exists for student " + studentId);
                         continue;
-                        }
+                    }
 
-                        ResultSet resultSet1 = preparedStatement1.executeQuery();
+                    ResultSet resultSet1 = preparedStatement1.executeQuery();
 
-                        if (resultSet1.next()) {
-                            String course = resultSet1.getString("students_course");
-                            System.out.println("student course = " + course);
-                            if (course.equalsIgnoreCase("CSE")) {
-                                String query2 = "INSERT INTO marks (student_id, course_name)" + "VALUES (?, ?);";
-                                try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
-                                    preparedStatement2.setInt(1, studentId);
-                                    for (int i = 0; i < 6; i++) {
-                                        if (i == 0) {
-                                            String c = "JAVA";
-                                            preparedStatement2.setString(2, c);
-                                        } else if (i == 1) {
-                                            String c = "DAA";
-                                            preparedStatement2.setString(2, c);
-                                        } else if (i == 2) {
-                                            String c = "OS";
-                                            preparedStatement2.setString(2, c);
-                                        } else if (i == 3) {
-                                            String c = "ECS";
-                                            preparedStatement2.setString(2, c);
-                                        } else if (i == 4) {
-                                            String c = "WEB";
-                                            preparedStatement2.setString(2, c);
-                                        } else if (i == 5) {
-                                            String c = "PROJ1";
-                                            preparedStatement2.setString(2, c);
-                                        }
+                    if (resultSet1.next()) {
+                        String course = resultSet1.getString("students_course");
+                        System.out.println("Student " + studentId + " course = " + course);
 
-                                        preparedStatement2.executeUpdate();
-                                    }
+                        if (course.equalsIgnoreCase("CSE")) {
+                            String query2 = "INSERT INTO marks (student_id, course_name) VALUES (?, ?)";
+                            try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+                                preparedStatement2.setInt(1, studentId);
+
+                                String[] courses = {"JAVA", "DAA", "OS", "ECS", "WEB", "PROJ1"};
+                                for (String c : courses) {
+                                    preparedStatement2.setString(2, c);
+                                    preparedStatement2.executeUpdate();
                                 }
-                                System.out.println("You are a B.Tech student");
-                            } else if (course.equalsIgnoreCase("BBA")) {
-                                System.out.println("You are a BBA student");
-                            } else {
-                                System.out.println("Error in getting student course");
-                                
                             }
-                        }
-                        }
-                
-                 
-            
-        catch (SQLException e) {
-            e.printStackTrace();
-            
-        }
-      }
-        
+                            System.out.println("Student " + studentId + " is a B.Tech student");
+                        } else if (course.equalsIgnoreCase("BBA")) {
+                            String query2 = "INSERT INTO marks (student_id, course_name) VALUES (?, ?)";
+                            try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+                                preparedStatement2.setInt(1, studentId);
 
-        
-        }
-        catch (SQLException e) {
+                                String[] courses = {"FSA", "IFS", "IBM", "CB"};
+                                for (String c : courses) {
+                                    preparedStatement2.setString(2, c);
+                                    preparedStatement2.executeUpdate();
+                                }
+                            }
+                            System.out.println("Student " + studentId + " is a BBA student");
+                        } else {
+                            System.out.println("Error in getting student course for student " + studentId);
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-}
-    public static int county(){
+    }
+
+    public static int[] getStudentIds() {
+        int rowCount = county();
+
+        String url = "jdbc:mysql://localhost:3306/university";
+        String user = "root";
+        String password = "root";
+
+        int[] studentIds = new int[rowCount];
+
+        try {
+
+            Connection connection = DriverManager.getConnection(url, user, password);
+
+            Statement statement = connection.createStatement();
+
+            String query = "SELECT student_id FROM students LIMIT " + rowCount;
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            int i = 0;
+            while (resultSet.next()) {
+                studentIds[i++] = resultSet.getInt("student_id");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return studentIds;
+    }
+
+    public static int county() {
         String jdbcUrl = "jdbc:mysql://localhost:3306/university";
         String username = "root";
         String password = "root";
-        int a;
+        int rowCount = 0;
+
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
             String query = "SELECT COUNT(*) FROM students";
-            try (Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery(query)) {
+
+            try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
                 resultSet.next();
-                int rowCount = resultSet.getInt(1);
-                System.out.println("Number of rows in customers table: " + rowCount);
-                a=rowCount;
+                rowCount = resultSet.getInt(1);
+                System.out.println("Number of rows in students table: " + rowCount);
+            } catch (SQLException e) {
+                System.out.println("Error in getting student count");
             }
-            catch (SQLException e) {
-                System.out.println("Error in getting student id");
-                return 0;
-            }
+        } catch (SQLException e) {
+            System.out.println("Error in getting student count");
         }
-        catch (SQLException e) {
-            System.out.println("Error in getting student id");
-            return 0;
-        }
-        return a;
+
+        return rowCount;
     }
-    private static boolean checkcourseid(int a) {
+
+    private static boolean checkCourseId(int studentId) {
         boolean exists = false;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
-                PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE student_id= ?")) {
-            pstmt.setInt(1, a);
+             PreparedStatement pstmt = con.prepareStatement("SELECT 1 FROM marks WHERE student_id= ?")) {
+            pstmt.setInt(1, studentId);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -138,5 +151,4 @@ public class course {
         return exists;
     }
 
-    
 }

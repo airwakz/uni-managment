@@ -11,12 +11,14 @@ public
  
 class facultyregi {
     
-    public static void fac(String a) {
+    public static void fac(int a) {
         Scanner in = new Scanner(System.in);
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+            System.out.print("Enter Your Name:");
+            String name =in.nextLine();
            
             System.out.print("Enter Your Email Address: ");
             String email = in.nextLine();
@@ -28,20 +30,32 @@ class facultyregi {
             String address = in.nextLine();
 
             System.out.print("Enter Your Phone Number: ");
-            String phone = in.nextLine();
+            String phoneNumber = in.nextLine();
+            while ((phoneNumber.length() != 10)||(phoneNumber.matches("\\d+")==false)) {
+                System.out.println("Phone number must be 10 digits. Please provide a valid phone number.");
+                System.out.print("Enter Your Phone Number: ");
+                phoneNumber=in.nextLine();
+                
+            }
 
             System.out.print("Enter Your Adhar: ");
-            int adhar = in.nextInt();
+            String adhar = in.nextLine();
+            while ((adhar.length() != 12)||(adhar.matches("\\d+")==false)) {
+                System.out.println("Phone number must be 10 digits. Please provide a valid phone number.");
+                System.out.print("Enter Your Adhar: ");
+                 adhar = in.nextLine();
+            }
 
-            String query = "INSERT INTO facregi (name,email,spec,address,Phone,adhar) VALUES (?,?,?,?,?,?);";
+            String query = "INSERT INTO facregi (fac_id,name,email,spec,address,Phone,adhar) VALUES (?,?,?,?,?,?,?);";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, a);
-                preparedStatement.setString(2, email);
-                preparedStatement.setString(3, spec);
-                preparedStatement.setString(4, address);
-                preparedStatement.setString(5, phone);
-                preparedStatement.setInt(6, adhar);
+                preparedStatement.setInt(1, a);
+                preparedStatement.setString(2, name);
+                preparedStatement.setString(3, email);
+                preparedStatement.setString(4, spec);
+                preparedStatement.setString(5, address);
+                preparedStatement.setString(6, phoneNumber);
+                preparedStatement.setString(7,adhar);
 
                 int status = preparedStatement.executeUpdate();
                 if (status > 0) {

@@ -11,42 +11,31 @@ import java.sql.Statement;
 public class faccourse {
     
     public static void faccurs() {
-        Scanner in = new Scanner(System.in);
-
-        System.out.println("1. Add Course");
-        System.out.println("Enter Your Choice: ");
-        int choice = in.nextInt();
-
-        switch (choice) {
-            case 1:
-                addCourse();
-                break;
-            default:
-                System.out.println("Invalid choice.");
-                break;
-        }
+        addCourse();
     }
 
     private static void addCourse() {
         Scanner in = new Scanner(System.in);   
-        System.out.println("Enter Faculty ID:");
+        System.out.print("Enter Faculty ID:");
         String facid = in.nextLine();
 
-        if (checkfacid(facid)==false) {
+        while (checkfacid(facid)==false) {
             System.out.println("Faculty ID does not exist.");
-             addCourse();  
+             System.out.print("Enter Faculty ID:");
+             facid = in.nextLine();
         }
 
         System.out.println("Enter Course Name: ");
         String cname = in.nextLine();
         
-    if(checkcourse(cname)==false)
+    while(checkcourse(cname)==false)
         {
             System.out.println("Course does not exist.");
             System.err.println("All the course in the university are:");
             showAllCourses();
-
-            addCourse();
+            System.out.println("Enter Course Name: ");
+            cname = in.nextLine();
+            
 
         }
 
