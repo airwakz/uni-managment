@@ -11,19 +11,19 @@ public class regi {
     public static void uregi() {
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Enter your name: ");
+        System.out.print("Enter your name: ");
         String username = in.nextLine();
         if (username.length() < 0) {
             System.out.println("Username cannot be empty");
             return;
         }
-        System.out.println("Enter your designation");
+        System.out.print("Enter your designation");
         String designation = in.nextLine();
         if (designation.length() < 0) {
             System.out.println("Designation cannot be empty");
             return;
         }
-        System.out.println("Enter your email: ");
+        System.out.print("Enter your email: ");
         String useremail = in.nextLine();
                 if (useremail.length() < 0) {
             System.out.println("Username cannot be empty");
@@ -34,7 +34,7 @@ public class regi {
             return;
         }
 
-        System.out.println("Enter your password: ");
+        System.out.print("Enter your password: ");
         String password = in.nextLine();
         if (password.length() < 0) {
             System.out.println("Password cannot be empty");

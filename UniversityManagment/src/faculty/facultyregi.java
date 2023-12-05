@@ -18,19 +18,19 @@ class facultyregi {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
            
-            System.out.println("Enter Your Email Address: ");
+            System.out.print("Enter Your Email Address: ");
             String email = in.nextLine();
 
-            System.out.println("Enter Your Specialization: ");
+            System.out.print("Enter Your Specialization: ");
             String spec = in.nextLine();
 
-            System.out.println("Enter Your Address: ");
+            System.out.print("Enter Your Address: ");
             String address = in.nextLine();
 
-            System.out.println("Enter Your Phone Number: ");
+            System.out.print("Enter Your Phone Number: ");
             String phone = in.nextLine();
 
-            System.out.println("Enter Your Adhar: ");
+            System.out.print("Enter Your Adhar: ");
             int adhar = in.nextInt();
 
             String query = "INSERT INTO facregi (name,email,spec,address,Phone,adhar) VALUES (?,?,?,?,?,?);";
