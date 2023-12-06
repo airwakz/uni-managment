@@ -36,7 +36,7 @@ public class course {
                         String course = resultSet1.getString("students_course");
                         System.out.println("Student " + studentId + " course = " + course);
 
-                        if (course.equalsIgnoreCase("CSE")) {
+                        if ((course.equalsIgnoreCase("CSE")||(course.equalsIgnoreCase("ECE")))) {
                             String query2 = "INSERT INTO marks (student_id, course_name) VALUES (?, ?)";
                             try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
                                 preparedStatement2.setInt(1, studentId);

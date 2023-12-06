@@ -39,11 +39,34 @@ public class studentregi {
         System.out.println("Enter Student Email:");
         String studentEmail = sc.nextLine();
 
-        System.out.println("Enter Course (e.g., B.Tech, BBA):");
-        String studentCourse = sc.nextLine();
-
-        System.out.println("Enter Branch (e.g., CSE, ME, BBA):");
-        String studentBranch = sc.nextLine();
+        boolean validCourse = false;
+        String studentCourse = "";
+        
+        while (!validCourse) {
+            System.out.println("Enter Course (e.g., B.Tech, BBA):");
+            studentCourse = sc.nextLine();
+        
+            if (studentCourse.equalsIgnoreCase("B.Tech") || studentCourse.equalsIgnoreCase("BBA")) {
+                validCourse = true;
+            } else {
+                System.out.println("Invalid course! Please enter a valid course.");
+            }
+        }
+        
+        boolean validBranch = false;
+        String studentBranch = "";
+        
+        while (!validBranch) {
+            System.out.println("Enter Branch (e.g., CSE, ECE, BBA):");
+            studentBranch = sc.nextLine();
+        
+            if (studentBranch.equalsIgnoreCase("CSE") || studentBranch.equalsIgnoreCase("ECE") || studentBranch.equalsIgnoreCase("BBA")) {
+                validBranch = true;
+            } else {
+                System.out.println("Invalid branch! Please enter a valid branch.");
+            }
+        }
+        
 
         System.out.println("Enter Father's Name:");
         String fatherName = sc.nextLine();
