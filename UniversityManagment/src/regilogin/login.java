@@ -20,6 +20,7 @@ public class login {
         a=b;
 
         try {
+
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
             Scanner scanner = new Scanner(System.in);
 
@@ -133,7 +134,9 @@ public class login {
 
     }
      public static int stud (String b)
-    { 
+    {
+       
+        
         String jdbcUrl = "jdbc:mysql://localhost:3306/university";
         String username = "root";
         String password = "root";
@@ -195,5 +198,16 @@ public class login {
         
 
     }
-
+    
+        public static void LoadDriver(String[] args) {
+            try {
+                // The newInstance() call is a work around for some
+                // broken Java implementations
+    
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (Exception ex) {
+                // handle the error
+            }
+        }
+    
 }

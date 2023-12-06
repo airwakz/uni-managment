@@ -12,7 +12,7 @@ public class studentregi {
 
     public void sturegi(int studentId) {
         Scanner sc = new Scanner(System.in);
-
+        
         // Check if student ID already exists
         String checkQuery = "SELECT * FROM students WHERE student_id = ?";
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
@@ -38,6 +38,10 @@ public class studentregi {
 
         System.out.println("Enter Student Email:");
         String studentEmail = sc.nextLine();
+        while ((studentEmail.length() < 0)||(studentEmail.contains("@"))) {
+            System.out.println("Enter Valid Useremail must contain '@' . ");
+            studentEmail = sc.nextLine();
+        }
 
         boolean validCourse = false;
         String studentCourse = "";

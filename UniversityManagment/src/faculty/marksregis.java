@@ -49,7 +49,6 @@ public class marksregis {
             e.printStackTrace();
             System.out.println("Error occurred");
         }
-        System.out.println("Do you want to continue? (Y/N)");
         String ls=in.nextLine();
         if(ls.equalsIgnoreCase("Y")){
             mar();

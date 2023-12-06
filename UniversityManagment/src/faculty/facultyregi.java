@@ -3,6 +3,7 @@ package faculty;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Scanner;
@@ -15,13 +16,30 @@ class facultyregi {
         Scanner in = new Scanner(System.in);
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            String checkQuery = "SELECT * FROM facregi WHERE fac_id = ?";
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
+             PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
+            checkStmt.setInt(1, a);
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("Faculty ID " + a + " is already registered.");
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Connection Failed");
+        }
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/university", "root", "root");
             System.out.print("Enter Your Name:");
             String name =in.nextLine();
            
             System.out.print("Enter Your Email Address: ");
             String email = in.nextLine();
+            while ((email.length() < 0)||(email.contains("@"))) {
+                System.out.println("Enter Valid Useremail must contain '@' . ");
+                email = in.nextLine();
+            }
 
             System.out.print("Enter Your Specialization: ");
             String spec = in.nextLine();
@@ -41,7 +59,7 @@ class facultyregi {
             System.out.print("Enter Your Adhar: ");
             String adhar = in.nextLine();
             while ((adhar.length() != 12)||(adhar.matches("\\d+")==false)) {
-                System.out.println("Phone number must be 10 digits. Please provide a valid phone number.");
+                System.out.println("Adhar must be 12 digits. Please provide a valid phone number.");
                 System.out.print("Enter Your Adhar: ");
                  adhar = in.nextLine();
             }

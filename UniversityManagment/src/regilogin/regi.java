@@ -11,7 +11,7 @@ public class regi {
     public static void uregi() {
         Scanner in = new Scanner(System.in);
 
-        System.out.print("Enter your name: ");
+        System.out.print("Enter username: ");
         String username = in.nextLine();
         if (username.length() < 0) {
             System.out.println("Username cannot be empty");
@@ -25,8 +25,8 @@ public class regi {
         }
         System.out.print("Enter your email: ");
         String useremail = in.nextLine();
-                if (useremail.length() < 0) {
-            System.out.println("Username cannot be empty");
+                if ((useremail.length() < 0)||(useremail.contains("@"))) {
+            System.out.println("Enter Valid Useremail. ");
             return;
         }
                  if (checkUsernameExists(useremail)) {

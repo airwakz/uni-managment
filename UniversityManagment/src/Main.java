@@ -12,9 +12,9 @@ public class Main
         while(i==true){
             System.out.println("1. Student Registration");
             System.out.println("2. View Grades");
-            System.out.println("3. View Attendance");
-            System.out.println("4. Update Password");
-            System.out.println("5. Exit");
+            
+            System.out.println("3. Update Password");
+            System.out.println("4. Exit");
             System.out.print("Enter Your Choice: ");
             int choice4=in.nextInt();
                             switch(choice4){
@@ -26,11 +26,11 @@ public class Main
                                     viewgrades grades=new viewgrades();
                                     grades.markss(status);
                                     break;
-                                case 4:
+                                case 3:
                                     updatepassword upd = new updatepassword();
                                     upd.updpswd(args);
                                     break;  
-                                case 5:
+                                case 4:
                                     i = false;
                                     break;
                                 default:
@@ -76,8 +76,8 @@ public class Main
             System.out.println("1. User Registration");
             System.out.println("2. Faculty Course Registration");
             System.out.println("3. Course Registration");
-            System.out.println("4. Student Detials Updation"); 
-            System.out.println("5. Faculty Detials Updation"); 
+            System.out.println("4. Student Details Updation"); 
+            System.out.println("5. Faculty Details Updation"); 
             System.out.println("6. Exit");
             System.out.print("Enter Your Choice: ");
             int choice4=in.nextInt();
